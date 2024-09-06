@@ -1,18 +1,28 @@
 const Ship = (length) => {
-	let timesHit = 0;
+	let timesHit;
 
 	const hit = () => {
-		timesHit++;
+		return timesHit++;
 	};
 
 	const isSunk = () => {
-		timesHit === length ? true : false;
+		if (timesHit >= length) {
+			return true;
+		} else {
+			return false;
+		}
+	};
+
+	const resetHits = () => {
+		return timesHit = 0;
 	};
 
 	return {
 		length: length,
 		hit,
 		isSunk,
+		resetHits,
 	};
 };
+
 export { Ship };
