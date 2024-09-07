@@ -275,7 +275,7 @@ describe("Gameboard Factory Function", () => {
 		]);
 	});
 
-	escribe("Gameboard receiveAttack Functionality", () => {
+	describe("Gameboard receiveAttack Functionality", () => {
 		let gameBoard;
 
 		beforeEach(() => {
