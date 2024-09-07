@@ -18,18 +18,16 @@ describe("Ship Factory Functionality", () => {
 		});
 	});
 
-	test("isSunk before hits", () => {
-		expect(testShip.isSunk()).toBe(false);
-	});
-
-	describe("isSunkAfter hits", () => {
-		beforeEach(() => {
+	describe("Hit Functionality", () => {
+		test("increases timesHit when hit is called", () => {
 			testShip.hit();
 			testShip.hit();
+			expect(testShip.isSunk()).toBe(true); // After 2 hits, the ship should be sunk
 		});
 
-		test("isSunk after hits", () => {
-			expect(testShip.isSunk()).toBe(true);
+		test("does not sink the ship with fewer hits than length", () => {
+			testShip.hit();
+			expect(testShip.isSunk()).toBe(false); // After 1 hit, the ship should not be sunk
 		});
 	});
 });
