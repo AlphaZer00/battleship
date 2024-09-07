@@ -30,4 +30,15 @@ describe("Ship Factory Functionality", () => {
 			expect(testShip.isSunk()).toBe(false); // After 1 hit, the ship should not be sunk
 		});
 	});
+
+	describe("Reset Functionality", () => {
+		test("resetHits should reset the number of hits", () => {
+			testShip.hit();
+			testShip.hit();
+			expect(testShip.isSunk()).toBe(true); // Ship should be sunk after 2 hits
+
+			testShip.resetHits(); // Reset hits
+			expect(testShip.isSunk()).toBe(false); // After reset, ship should not be sunk
+		});
+	});
 });
