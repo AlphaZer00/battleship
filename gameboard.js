@@ -1,5 +1,6 @@
 const Gameboard = () => {
 	let endpoint;
+	const missedShots = [];
 
 	const board = new Array(10);
 	for (let i = 0; i < board.length; i++) {
@@ -52,7 +53,18 @@ const Gameboard = () => {
 		return board;
 	};
 
-	return { placeShip, board, clearBoard };
+	const receiveAttack = (x, y) => {
+		// Check if ship is at coordinates
+		if (board[x - 1][y - 1]) {
+			// Mark as hit
+			board[x - 1][y - 1] = "hit";
+		} else {
+			// record missed hit
+			missedShots.push([x, y]);
+		}
+	};
+
+	return { placeShip, board, clearBoard, receiveAttack, missedShots };
 };
 
 export { Gameboard };
