@@ -12,8 +12,10 @@ describe("Ship Factory Functionality", () => {
 		testShip.resetHits();
 	});
 
-	test("Length works", () => {
-		expect(testShip.length).toBe(2);
+	describe("Initialization", () => {
+		test("creates a ship with the correct length", () => {
+			expect(testShip.length).toBe(2);
+		});
 	});
 
 	test("isSunk before hits", () => {
