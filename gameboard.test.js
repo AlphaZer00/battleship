@@ -7,6 +7,7 @@ test("Board works", () => {
 });
 
 test("PlaceShip horizontal", () => {
-	expect(testBoard.placeShip(4, 10, "vertical", 4)).toBeDefined();
+	expect(testBoard.placeShip(6, 6, "horizontal", 4)).toEqual([[false, false, false, false, false, false, false, false, false, false], [false, false, false, false, false, false, false, false, false, false], [false, false, false, false, false, false, false, false, false, false], [false, false, false, false, false, false, false, false, false, false], [false, false, false, false, false, false, false, false, false, false], [false, false, false, false, false, true, true, true, true, false], [false, false, false, false, false, false, false, false, false, false], [false, false, false, false, false, false, false, false, false, false], [false, false, false, false, false, false, false, false, false, false], [false, false, false, false, false, false, false, false, false, false]]);
 });
+
 console.table(testBoard.board);
