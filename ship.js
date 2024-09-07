@@ -1,5 +1,5 @@
 const Ship = (length) => {
-	let timesHit;
+	let timesHit = 0;
 
 	const hit = () => {
 		return timesHit++;
