@@ -9,6 +9,14 @@ const Gameboard = () => {
 		}
 	}
 
+	const clearBoard = () => {
+		for (let i = 0; i < 10; i++) {
+			for (let j = 0; j < 10; j++) {
+				board[i][j] = false;
+			}
+		}
+	};
+
 	function setEndpoint(x, y, direction, length) {
 		if (direction === "horizontal") {
 			endpoint = y - 1 + length;
@@ -19,7 +27,6 @@ const Gameboard = () => {
 	}
 
 	function checkBounds() {
-		console.log("endpoint", endpoint);
 		if (endpoint < 11) {
 			return true;
 		}
@@ -41,11 +48,11 @@ const Gameboard = () => {
 				board[x - 1 + i][y - 1] = true;
 			}
 		}
-		console.table(board);
+
 		return board;
 	};
 
-	return { placeShip, board };
+	return { placeShip, board, clearBoard };
 };
 
 export { Gameboard };
