@@ -46,12 +46,24 @@ describe("Gameboard Factory Function", () => {
 
 		test("PlaceShip horizontal", () => {
 			const ship = Ship(4); // Ship of length 4
-			testBoard.placeShip(6, 6, "horizontal", 4);
+			testBoard.placeShip(6, 6, "horizontal", ship);
 
-			expect(testBoard.board[5][5]).toEqual({ ship, index: 0 }); // First part of the ship
-			expect(testBoard.board[5][6]).toEqual({ ship, index: 1 });
-			expect(testBoard.board[5][7]).toEqual({ ship, index: 2 });
-			expect(testBoard.board[5][8]).toEqual({ ship, index: 3 }); // Last part of the ship
+			expect(testBoard.board[5][5]).toMatchObject({
+				ship: { length: 4 },
+				index: 0,
+			}); // First part of the ship
+			expect(testBoard.board[5][6]).toMatchObject({
+				ship: { length: 4 },
+				index: 1,
+			});
+			expect(testBoard.board[5][7]).toMatchObject({
+				ship: { length: 4 },
+				index: 2,
+			});
+			expect(testBoard.board[5][8]).toMatchObject({
+				ship: { length: 4 },
+				index: 3,
+			}); // Last part of the ship
 
 			// Check that other parts of the board are still null
 			expect(testBoard.board[5][9]).toBe(null);
@@ -60,13 +72,28 @@ describe("Gameboard Factory Function", () => {
 
 		test("PlaceShip vertical", () => {
 			const ship = Ship(5); // Ship of length 5
-			testBoard.placeShip(1, 3, "vertical", 5);
+			testBoard.placeShip(1, 3, "vertical", ship);
 
-			expect(testBoard.board[0][2]).toEqual({ ship, index: 0 }); // First part of the ship
-			expect(testBoard.board[1][2]).toEqual({ ship, index: 1 });
-			expect(testBoard.board[2][2]).toEqual({ ship, index: 2 });
-			expect(testBoard.board[3][2]).toEqual({ ship, index: 3 });
-			expect(testBoard.board[4][2]).toEqual({ ship, index: 4 }); // Last part of the ship
+			expect(testBoard.board[0][2]).toMatchObject({
+				ship: { length: 5 },
+				index: 0,
+			}); // First part of the ship
+			expect(testBoard.board[1][2]).toMatchObject({
+				ship: { length: 5 },
+				index: 1,
+			});
+			expect(testBoard.board[2][2]).toMatchObject({
+				ship: { length: 5 },
+				index: 2,
+			});
+			expect(testBoard.board[3][2]).toMatchObject({
+				ship: { length: 5 },
+				index: 3,
+			});
+			expect(testBoard.board[4][2]).toMatchObject({
+				ship: { length: 5 },
+				index: 4,
+			}); // Last part of the ship
 
 			// Check that other parts of the board are still null
 			expect(testBoard.board[5][2]).toBe(null);
@@ -84,8 +111,8 @@ describe("Gameboard Factory Function", () => {
 			ship2 = Ship(2); // Ship of length 2
 
 			// Place two ships on the board
-			gameBoard.placeShip(1, 1, "horizontal", 3); // Ship 1 placed at (1,1) to (1,3)
-			gameBoard.placeShip(3, 1, "vertical", 2); // Ship 2 placed at (3,1) to (4,1)
+			gameBoard.placeShip(1, 1, "horizontal", ship1); // Ship 1 placed at (1,1) to (1,3)
+			gameBoard.placeShip(3, 1, "vertical", ship2); // Ship 2 placed at (3,1) to (4,1)
 		});
 
 		test("receiveAttack hits the correct ship", () => {
@@ -98,15 +125,15 @@ describe("Gameboard Factory Function", () => {
 		});
 
 		test("receiveAttack misses properly", () => {
-			gameboard.receiveAttack(2, 2); // No ship at (2,2)
-			expect(gameboard.missedShots).toContainEqual([2, 2]); // Miss should be recorded
+			gameBoard.receiveAttack(2, 2); // No ship at (2,2)
+			expect(gameBoard.missedShots).toContainEqual([2, 2]); // Miss should be recorded
 		});
 
 		test("receiveAttack hits different ships correctly", () => {
-			gameboard.receiveAttack(3, 1); // Hits ship2 at (3,1)
+			gameBoard.receiveAttack(3, 1); // Hits ship2 at (3,1)
 			expect(ship2.isSunk()).toBe(false); // Ship2 is not yet sunk
 
-			gameboard.receiveAttack(4, 1); // Hits ship2 at (4,1)
+			gameBoard.receiveAttack(4, 1); // Hits ship2 at (4,1)
 			expect(ship2.isSunk()).toBe(true); // Ship2 should be sunk after 2 hits
 		});
 	});
