@@ -8,14 +8,14 @@ const Gameboard = () => {
 	for (let i = 0; i < board.length; i++) {
 		board[i] = new Array(10);
 		for (let j = 0; j < 10; j++) {
-			board[i][j] = false;
+			board[i][j] = null;
 		}
 	}
 
 	const clearBoard = () => {
 		for (let i = 0; i < 10; i++) {
 			for (let j = 0; j < 10; j++) {
-				board[i][j] = false;
+				board[i][j] = null;
 			}
 		}
 	};
