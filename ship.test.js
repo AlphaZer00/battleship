@@ -20,8 +20,8 @@ describe("Ship Factory Functionality", () => {
 
 	describe("Hit Functionality", () => {
 		test("increases timesHit when hit is called", () => {
-			testShip.hit();
-			testShip.hit();
+			testShip.hit(0);
+			testShip.hit(1);
 			expect(testShip.isSunk()).toBe(true); // After 2 hits, the ship should be sunk
 		});
 
@@ -33,8 +33,8 @@ describe("Ship Factory Functionality", () => {
 
 	describe("Reset Functionality", () => {
 		test("resetHits should reset the number of hits", () => {
-			testShip.hit();
-			testShip.hit();
+			testShip.hit(0);
+			testShip.hit(1);
 			expect(testShip.isSunk()).toBe(true); // Ship should be sunk after 2 hits
 
 			testShip.resetHits(); // Reset hits
