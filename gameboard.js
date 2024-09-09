@@ -1,3 +1,5 @@
+import { Ship } from "./ship";
+
 const Gameboard = () => {
 	let endpoint;
 	const missedShots = [];
@@ -35,6 +37,8 @@ const Gameboard = () => {
 	}
 
 	const placeShip = (x, y, direction, length) => {
+		const newShip = Ship(length);
+
 		setEndpoint(x, y, direction, length);
 		if (!checkBounds()) {
 			throw new Error("Ship is not in bounds");
@@ -42,11 +46,11 @@ const Gameboard = () => {
 
 		if (direction === "horizontal") {
 			for (let i = 0; i < length; i++) {
-				board[x - 1][y - 1 + i] = true;
+				board[x - 1][y - 1 + i] = { ship: newShip, index: i };
 			}
 		} else if (direction === "vertical") {
 			for (let i = 0; i < length; i++) {
-				board[x - 1 + i][y - 1] = true;
+				board[x - 1 + i][y - 1] = { ship: newShip, index: i };
 			}
 		}
 
@@ -54,10 +58,12 @@ const Gameboard = () => {
 	};
 
 	const receiveAttack = (x, y) => {
-		// Check if ship is at coordinates
-		if (board[x - 1][y - 1]) {
+		// Create variable for target
+		const target = board[x - 1][y - 1];
+		// Check if ship is at target
+		if (target && target.ship) {
 			// Mark as hit
-			board[x - 1][y - 1] = "hit";
+			target.ship.hit(target.index);
 		} else {
 			// record missed hit
 			missedShots.push([x, y]);
