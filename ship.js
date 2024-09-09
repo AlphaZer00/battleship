@@ -1,8 +1,14 @@
 const Ship = (length) => {
 	let timesHit = 0;
+	const shipHealth = new Array(length).fill(false);
 
-	const hit = () => {
+	const hit = (index) => {
+		shipHealth[index] = true;
 		return timesHit++;
+	};
+
+	const printShipStatus = () => {
+		return shipHealth;
 	};
 
 	const isSunk = () => {
@@ -14,7 +20,8 @@ const Ship = (length) => {
 	};
 
 	const resetHits = () => {
-		return timesHit = 0;
+		shipHealth.map(() => false);
+		timesHit = 0;
 	};
 
 	return {
@@ -22,6 +29,7 @@ const Ship = (length) => {
 		hit,
 		isSunk,
 		resetHits,
+		printShipStatus,
 	};
 };
 
