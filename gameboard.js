@@ -36,21 +36,19 @@ const Gameboard = () => {
 		return false;
 	}
 
-	const placeShip = (x, y, direction, length) => {
-		const newShip = Ship(length);
-
-		setEndpoint(x, y, direction, length);
+	const placeShip = (x, y, direction, ship) => {
+		setEndpoint(x, y, direction, ship.length);
 		if (!checkBounds()) {
 			throw new Error("Ship is not in bounds");
 		}
 
 		if (direction === "horizontal") {
-			for (let i = 0; i < length; i++) {
-				board[x - 1][y - 1 + i] = { ship: newShip, index: i };
+			for (let i = 0; i < ship.length; i++) {
+				board[x - 1][y - 1 + i] = { ship, index: i };
 			}
 		} else if (direction === "vertical") {
-			for (let i = 0; i < length; i++) {
-				board[x - 1 + i][y - 1] = { ship: newShip, index: i };
+			for (let i = 0; i < ship.length; i++) {
+				board[x - 1 + i][y - 1] = { ship, index: i };
 			}
 		}
 
