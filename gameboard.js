@@ -3,6 +3,7 @@ import { Ship } from "./ship";
 const Gameboard = () => {
 	let endpoint;
 	const missedShots = [];
+	const ships = [];
 
 	const board = new Array(10);
 	for (let i = 0; i < board.length; i++) {
@@ -45,10 +46,12 @@ const Gameboard = () => {
 		if (direction === "horizontal") {
 			for (let i = 0; i < ship.length; i++) {
 				board[x - 1][y - 1 + i] = { ship, index: i };
+				ships.push(ship);
 			}
 		} else if (direction === "vertical") {
 			for (let i = 0; i < ship.length; i++) {
 				board[x - 1 + i][y - 1] = { ship, index: i };
+				ships.push(ship);
 			}
 		}
 
@@ -68,7 +71,18 @@ const Gameboard = () => {
 		}
 	};
 
-	return { placeShip, board, clearBoard, receiveAttack, missedShots };
+    const isAllSunk = () => {
+        ships.every((ship) => ship.isSunk());
+    }
+
+	return {
+		placeShip,
+		board,
+		clearBoard,
+		receiveAttack,
+		missedShots,
+		isAllSunk,
+	};
 };
 
 export { Gameboard };
