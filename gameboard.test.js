@@ -1,3 +1,4 @@
+import { describe } from "node:test";
 import { Gameboard } from "./gameboard";
 import { Ship } from "./ship";
 
@@ -135,6 +136,34 @@ describe("Gameboard Factory Function", () => {
 
 			gameBoard.receiveAttack(4, 1); // Hits ship2 at (4,1)
 			expect(ship2.isSunk()).toBe(true); // Ship2 should be sunk after 2 hits
+		});
+	});
+
+	describe("Checks if all ships on board are sunk", () => {
+		test("isAllSunk returns true when all ships are sunk", () => {
+			// Mock ship objects with isSunk method
+			const mockShip1 = { isSunk: jest.fn(() => true) };
+			const mockShip2 = { isSunk: jest.fn(() => true) };
+			const mockShip3 = { isSunk: jest.fn(() => true) };
+
+			const ships = [mockShip1, mockShip2, mockShip3];
+
+			const isAllSunk = () => ships.every((ship) => ship.isSunk());
+
+			expect(isAllSunk()).toBe(true);
+		});
+
+		test("isAllSunk returns false when not all ships are sunk", () => {
+			// Mock ship objects with isSunk method
+			const mockShip1 = { isSunk: jest.fn(() => true) };
+			const mockShip2 = { isSunk: jest.fn(() => false) };
+			const mockShip3 = { isSunk: jest.fn(() => true) };
+
+			const ships = [mockShip1, mockShip2, mockShip3];
+
+			const isAllSunk = () => ships.every((ship) => ship.isSunk());
+
+			expect(isAllSunk()).toBe(false);
 		});
 	});
 });
