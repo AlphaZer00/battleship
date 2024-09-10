@@ -71,9 +71,9 @@ const Gameboard = () => {
 		}
 	};
 
-    const isAllSunk = () => {
-        ships.every((ship) => ship.isSunk());
-    }
+	const isAllSunk = () => {
+		return ships.every((ship) => ship.isSunk());
+	};
 
 	return {
 		placeShip,
