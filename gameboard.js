@@ -1,5 +1,3 @@
-import { Ship } from "./ship";
-
 const Gameboard = () => {
 	let endpoint;
 	const missedShots = [];
