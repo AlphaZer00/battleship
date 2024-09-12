@@ -1,4 +1,4 @@
-import { Gameboard } from "./gameboard";
+import { Gameboard } from "./src/gameboard";
 
 const Player = (type) => {
 	if (type !== "human" && type !== "computer") {

@@ -1,4 +1,4 @@
-import { Ship } from "./ship";
+import { Ship } from "./src/ship";
 import { Player } from "./player";
 import { describe } from "node:test";
 
