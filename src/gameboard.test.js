@@ -1,6 +1,6 @@
-import { describe } from "node:test";
-import { Gameboard } from "./gameboard";
-import { Ship } from "./src/ship";
+
+import { Gameboard } from "./gameboard.js";
+import { Ship } from "./ship.js";
 
 describe("Gameboard Factory Function", () => {
 	let testBoard;

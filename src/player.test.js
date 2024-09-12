@@ -1,5 +1,5 @@
-import { Ship } from "./src/ship";
-import { Player } from "./player";
+import { Ship } from "./ship.js";
+import { Player } from "./player.js";
 import { describe } from "node:test";
 
 describe("Player factory function", () => {
