@@ -16,15 +16,18 @@ const createGrid = (player) => {
 	gridContainer.style.display = "grid";
 
 	// Style grid container
-	gridContainer.style.gridTemplateColumns = `repeat(10, 1fr)`;
-	gridContainer.style.gridTemplateRows = `repeat(10, 1fr)`;
+	gridContainer.style.gridTemplateColumns = `repeat(11, 1fr)`;
+	gridContainer.style.gridTemplateRows = `repeat(11, 1fr)`;
 	gridContainer.style.gap = "5px";
 	gridContainer.style.width = "500px";
 	gridContainer.style.height = "500px";
 	gridContainer.classList.add("grid");
 
-	for (let row = 0; row < board.length; row++) {
-		for (let col = 0; col < board[row].length; col++) {
+	// Array of letters
+	const letters = ["", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+
+	for (let row = 0; row < 11; row++) {
+		for (let col = 0; col < 11; col++) {
 			// Create square
 			const square = document.createElement("div");
 			square.classList.add("square");
@@ -35,11 +38,26 @@ const createGrid = (player) => {
 			square.style.justifyContent = "center";
 			square.style.alignItems = "center";
 
-			// Determine square content from gameBoard
-			if (board[row][col] === null) {
-				square.textContent = "null";
-			} else {
-				square.textContent = "S";
+			// Add number labels at the top row
+			if (row === 0 && col > 0) {
+				square.textContent = col; // Numbers along the top
+				square.style.fontWeight = "bold";
+				square.style.backgroundColor = "#f0f0f0";
+			}
+			// Add letter labels at the first column
+			else if (col === 0 && row > 0) {
+				square.textContent = letters[row]; // Letters along the left
+				square.style.fontWeight = "bold";
+				square.style.backgroundColor = "#f0f0f0";
+			}
+			// Fill the rest of the grid with game board content
+			else if (row > 0 && col > 0) {
+				// Determine square content from gameBoard
+				if (board[row - 1][col - 1] === null) {
+					square.textContent = "null"; // Empty cell
+				} else {
+					square.textContent = "S"; // Ship cell
+				}
 			}
 			gridContainer.appendChild(square);
 		}
