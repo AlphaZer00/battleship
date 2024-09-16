@@ -12,6 +12,10 @@ const Player = (type) => {
 		const row = letterToIndex(letter);
 		//Determine column by converting to zero-indexed
 		const col = y - 1;
+		// Validate row and column
+		if (row === -1 || col < 0 || col > 9) {
+			throw new Error("Invalid coordinates");
+		}
 		return opponentBoard.receiveAttack(row, col);
 	};
 
