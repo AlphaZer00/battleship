@@ -86,7 +86,7 @@ const displayHit = (player, letter, columnNum) => {
 	}
 };
 
-const createOppGrid = (player) => {
+const createOppGrid = () => {
 	// Create grid container
 	const gridContainer = document.createElement("div");
 	gridContainer.style.display = "grid";
