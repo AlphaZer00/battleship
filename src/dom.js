@@ -87,9 +87,6 @@ const displayHit = (player, letter, columnNum) => {
 };
 
 const createOppGrid = (player) => {
-	// Create reference to player's gameboard
-	const board = player.playerBoard.board;
-
 	// Create grid container
 	const gridContainer = document.createElement("div");
 	gridContainer.style.display = "grid";
