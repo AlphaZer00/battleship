@@ -65,10 +65,23 @@ const createGrid = (player) => {
 	document.body.appendChild(gridContainer);
 };
 
-const displayHit = (player, x, y) => {
+const letterToIndex = (letter) => {
+	const letters = "ABCDEFGHIJ";
+	return letters.indexOf(letter.toUpperCase());
+};
+
+const displayHit = (player, letter, columnNum) => {
+	const x = letterToIndex(letter);
+	const y = columnNum - 1;
+
+	// Validate row and column
+	if (x === -1 || y < 0 || y > 9) {
+		throw new Error("Invalid coordinates");
+	}
+
 	const board = player.playerBoard.board;
-	const target = board[x - 1][y - 1];
-	const index = (x - 1) * 10 + (y - 1);
+	const target = board[x][y];
+	const index = (x + 1) * 11 + (y + 1);
 	const squares = document.getElementsByClassName("square");
 
 	if (target === null) {
