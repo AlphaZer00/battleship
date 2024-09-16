@@ -47,4 +47,19 @@ const createGrid = (player) => {
 	document.body.appendChild(gridContainer);
 };
 
-export { createGrid };
+const displayHit = (player, x, y) => {
+	const board = player.playerBoard.board;
+	const target = board[x - 1][y - 1];
+	const index = (x - 1) * 10 + (y - 1);
+	const squares = document.getElementsByClassName("square");
+
+	if (target === null) {
+		squares[index].style.backgroundColor = "red";
+		squares[index].textContent = "X";
+	} else {
+		squares[index].style.backgroundColor = "blue";
+		squares[index].textContent = "O";
+	}
+};
+
+export { createGrid, displayHit };
