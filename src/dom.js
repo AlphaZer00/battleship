@@ -1,12 +1,5 @@
 import { Player } from "./player.js";
 
-const renderBoard = (player) => {
-	// Create reference to board
-	const board = player.playerBoard.board;
-
-	const grid = document.createElement("div");
-};
-
 const createGrid = (player) => {
 	// Create reference to player's gameboard
 	const board = player.playerBoard.board;
