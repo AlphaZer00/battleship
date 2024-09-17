@@ -106,7 +106,7 @@ const createOppGrid = () => {
 		for (let col = 0; col < 11; col++) {
 			// Create square
 			const square = document.createElement("div");
-			square.classList.add("square");
+			square.classList.add("opp-square");
 
 			// Style Square
 			square.style.border = "1px solid #000";
@@ -136,4 +136,23 @@ const createOppGrid = () => {
 	document.body.appendChild(gridContainer);
 };
 
-export { createGrid, displayHit, createOppGrid };
+const displaySentHit = (player, letter, columnNum) => {
+	const x = letterToIndex(letter);
+	const y = columnNum - 1;
+
+	const opponentBoard = player.playerBoard.board;
+	const target = opponentBoard[x][y];
+	const index = (x + 1) * 11 + (y + 1);
+	const squares = document.getElementsByClassName("opp-square");
+
+	// If target is empty square
+	if (target === null) {
+		squares[index].textContent = "X";
+		squares[index].style.backgroundColor = "red";
+	} else {
+		squares[index].style.backgroundColor = "blue";
+		squares[index].textContent = "O";
+	}
+};
+
+export { createGrid, displayHit, createOppGrid, displaySentHit };
