@@ -177,4 +177,36 @@ const selectSquare = () => {
 	});
 };
 
-export { createGrid, displayHit, createOppGrid, displaySentHit, selectSquare };
+const sendAttackOnClick = (player, opponentBoard) => {
+	const attackBtn = document.getElementById("attack");
+
+	// Get selected coordinates from selectSquare
+	let coordinates = selectSquare();
+
+	// On attack button click
+	attackBtn.addEventListener("click", () => {
+		// Store coordinates
+		const x = coordinates[0];
+		const y = coordinates[1];
+
+		// Check if coordinates exist
+		if (x !== null && y !== null) {
+			// Send attack
+			player.sendAttack(opponentBoard, x, y);
+
+			// Clear selected grid on html
+			document.querySelectorAll(".opp-square").forEach((square) => {
+				square.classList.remove("selected");
+			});
+		}
+	});
+};
+
+export {
+	createGrid,
+	displayHit,
+	createOppGrid,
+	displaySentHit,
+	selectSquare,
+	sendAttackOnClick,
+};
