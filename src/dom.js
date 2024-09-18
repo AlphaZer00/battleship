@@ -97,7 +97,7 @@ const createOppGrid = () => {
 	gridContainer.style.gap = "5px";
 	gridContainer.style.width = "500px";
 	gridContainer.style.height = "500px";
-	gridContainer.classList.add("grid");
+	gridContainer.classList.add("opp-grid");
 
 	// Array of letters
 	const letters = ["", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
@@ -155,4 +155,26 @@ const displaySentHit = (player, letter, columnNum) => {
 	}
 };
 
-export { createGrid, displayHit, createOppGrid, displaySentHit };
+const selectSquare = () => {
+	// Get reference to opponent squares
+	const oppSquares = document.querySelectorAll(".opp-square");
+	let selectedSquare = [];
+
+	//Add event listener to each square
+	oppSquares.forEach((square, index) => {
+		const x = Math.floor(index / 11);
+		const y = index % 11;
+
+		square.addEventListener("click", () => {
+			// Clear previous selection
+			oppSquares.forEach((square) => square.classList.remove("selected"));
+			// Add selected class to square
+			square.classList.add("selected");
+			selectedSquare = [x, y];
+			console.log(selectedSquare);
+			return selectedSquare;
+		});
+	});
+};
+
+export { createGrid, displayHit, createOppGrid, displaySentHit, selectSquare };
