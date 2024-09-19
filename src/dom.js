@@ -1,5 +1,7 @@
 import { Player } from "./player.js";
 
+let selectedSquare = [];
+
 const createGrid = (player) => {
 	// Create reference to player's gameboard
 	const board = player.playerBoard.board;
@@ -136,11 +138,16 @@ const createOppGrid = () => {
 	document.body.appendChild(gridContainer);
 };
 
-const displaySentHit = (player, letter, columnNum) => {
-	const x = letterToIndex(letter);
+const displaySentHit = (opponentGameboard, letter, columnNum) => {
+	let x;
+	if (typeof letter === "string") {
+		x = letterToIndex(letter) - 1;
+	} else if (typeof letter === "number") {
+		x = letter - 1;
+	}
 	const y = columnNum - 1;
 
-	const opponentBoard = player.playerBoard.board;
+	const opponentBoard = opponentGameboard.board;
 	const target = opponentBoard[x][y];
 	const index = (x + 1) * 11 + (y + 1);
 	const squares = document.getElementsByClassName("opp-square");
@@ -158,7 +165,6 @@ const displaySentHit = (player, letter, columnNum) => {
 const selectSquare = () => {
 	// Get reference to opponent squares
 	const oppSquares = document.querySelectorAll(".opp-square");
-	let selectedSquare = [];
 
 	//Add event listener to each square
 	oppSquares.forEach((square, index) => {
@@ -171,23 +177,21 @@ const selectSquare = () => {
 			// Add selected class to square
 			square.classList.add("selected");
 			selectedSquare = [x, y];
-			console.log(selectedSquare);
-			return selectedSquare;
 		});
 	});
+};
+
+const getSelectedSquare = () => {
+	return selectedSquare;
 };
 
 const sendAttackOnClick = (player, opponentBoard) => {
 	const attackBtn = document.getElementById("attack");
 
-	// Get selected coordinates from selectSquare
-	let coordinates = selectSquare();
-
 	// On attack button click
 	attackBtn.addEventListener("click", () => {
 		// Store coordinates
-		const x = coordinates[0];
-		const y = coordinates[1];
+		const [x, y] = getSelectedSquare();
 
 		// Check if coordinates exist
 		if (x !== null && y !== null) {
@@ -198,6 +202,9 @@ const sendAttackOnClick = (player, opponentBoard) => {
 			document.querySelectorAll(".opp-square").forEach((square) => {
 				square.classList.remove("selected");
 			});
+
+			//display sent attack
+			displaySentHit(opponentBoard, x, y);
 		}
 	});
 };
