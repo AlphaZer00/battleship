@@ -13,7 +13,6 @@ const createGrid = (player) => {
 	// Style grid container
 	gridContainer.style.gridTemplateColumns = `repeat(11, 1fr)`;
 	gridContainer.style.gridTemplateRows = `repeat(11, 1fr)`;
-	gridContainer.style.gap = "5px";
 	gridContainer.style.width = "500px";
 	gridContainer.style.height = "500px";
 	gridContainer.classList.add("grid");
@@ -49,7 +48,7 @@ const createGrid = (player) => {
 			else if (row > 0 && col > 0) {
 				// Determine square content from gameBoard
 				if (board[row - 1][col - 1] === null) {
-					square.textContent = "null"; // Empty cell
+					square.textContent = ""; // Empty cell
 				} else {
 					square.textContent = "S"; // Ship cell
 				}
@@ -96,7 +95,6 @@ const createOppGrid = () => {
 	// Style grid container
 	gridContainer.style.gridTemplateColumns = `repeat(11, 1fr)`;
 	gridContainer.style.gridTemplateRows = `repeat(11, 1fr)`;
-	gridContainer.style.gap = "5px";
 	gridContainer.style.width = "500px";
 	gridContainer.style.height = "500px";
 	gridContainer.classList.add("opp-grid");
@@ -130,7 +128,7 @@ const createOppGrid = () => {
 			}
 			// Fill the rest of the grid with null
 			else if (row > 0 && col > 0) {
-				square.textContent = "null"; // Empty cell
+				square.textContent = ""; // Empty cell
 			}
 			gridContainer.appendChild(square);
 		}
@@ -204,6 +202,7 @@ const sendAttackOnClick = (player, opponentBoard) => {
 			});
 
 			//display sent attack
+			console.log("sent attack to:", x, y);
 			displaySentHit(opponentBoard, x, y);
 		}
 	});
