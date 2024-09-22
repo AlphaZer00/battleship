@@ -66,13 +66,13 @@ const letterToIndex = (letter) => {
 };
 
 const displayHit = (player, letter, columnNum) => {
-	const x = letterToIndex(letter);
-	const y = columnNum - 1;
-
-	// Validate row and column
-	if (x === -1 || y < 0 || y > 9) {
-		throw new Error("Invalid coordinates");
+	let x;
+	if (typeof letter === "string") {
+		x = letterToIndex(letter);
+	} else if (typeof letter === "number") {
+		x = letter - 1;
 	}
+	const y = columnNum - 1;
 
 	const board = player.playerBoard.board;
 	const target = board[x][y];

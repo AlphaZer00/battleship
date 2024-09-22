@@ -58,7 +58,7 @@ const Gameboard = () => {
 
 	const receiveAttack = (x, y) => {
 		// Create variable for target
-		const target = board[x - 1][y - 1];
+		const target = board[x][y];
 		// Check if ship is at target
 		if (target && target.ship) {
 			// Mark as hit
