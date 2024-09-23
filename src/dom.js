@@ -154,9 +154,11 @@ const displaySentHit = (opponentGameboard, letter, columnNum) => {
 	if (target === null) {
 		squares[index].textContent = "X";
 		squares[index].style.backgroundColor = "red";
+		squares[index].classList.add("miss");
 	} else {
 		squares[index].style.backgroundColor = "blue";
 		squares[index].textContent = "O";
+		squares[index].classList.add("hit");
 	}
 };
 
@@ -193,6 +195,23 @@ const sendAttackOnClick = (player, opponentBoard) => {
 
 		// Check if coordinates exist
 		if (x !== null && y !== null) {
+			// Get reference to target square on DOM
+			const targetSquare = document.querySelector(
+				`.opp-square:nth-child(${x * 11 + (y + 1)})`
+			);
+
+			console.log("targetSquare", targetSquare);
+			// Check if square has 'hit' or 'miss' class
+			if (
+				targetSquare.classList.contains("hit") ||
+				targetSquare.classList.contains("miss")
+			) {
+				// Alert player and exit from function
+				alert(
+					"This position has already been attacked! Please select a different one."
+				);
+				return;
+			}
 			// Send attack
 			player.sendAttack(opponentBoard, x, y);
 
