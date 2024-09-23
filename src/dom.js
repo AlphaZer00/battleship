@@ -188,8 +188,12 @@ const getSelectedSquare = () => {
 const sendAttackOnClick = (player, opponentBoard) => {
 	const attackBtn = document.getElementById("attack");
 
+	// Remove previous event listeners
+	attackBtn.replaceWith(attackBtn.cloneNode(true));
+	const newAttackBtn = document.getElementById("attack");
+
 	// On attack button click
-	attackBtn.addEventListener("click", () => {
+	newAttackBtn.addEventListener("click", () => {
 		// Store coordinates
 		const [x, y] = getSelectedSquare();
 
@@ -200,7 +204,6 @@ const sendAttackOnClick = (player, opponentBoard) => {
 				`.opp-square:nth-child(${x * 11 + (y + 1)})`
 			);
 
-			console.log("targetSquare", targetSquare);
 			// Check if square has 'hit' or 'miss' class
 			if (
 				targetSquare.classList.contains("hit") ||
