@@ -4,7 +4,6 @@ import {
 	createGrid,
 	displayHit,
 	createOppGrid,
-	displaySentHit,
 	selectSquare,
 	sendAttackOnClick,
 } from "./dom.js";
@@ -41,9 +40,6 @@ function playHumanVsComputer(human, computer) {
 	// First, human attack
 	sendAttackOnClick(human, computer.playerBoard, (attackSuccess) => {
 		if (attackSuccess) {
-            console.log(computer.playerBoard.isAllSunk());
-            console.log('Ship4 status:', ship4.printShipStatus());
-            console.log('Ship4 isSunk:', ship4.isSunk());
 			if (computer.playerBoard.isAllSunk()) {
 				alert("Human Wins!");
 				return;

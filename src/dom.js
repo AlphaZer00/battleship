@@ -1,5 +1,3 @@
-import { Player } from "./player.js";
-
 let selectedSquare = [];
 
 const createGrid = (player) => {
@@ -225,7 +223,6 @@ const sendAttackOnClick = (player, opponentBoard, callback) => {
 			});
 
 			//display sent attack
-			console.log("sent attack to:", x, y);
 			displaySentHit(opponentBoard, x, y);
 
             // Send successful attack callback
