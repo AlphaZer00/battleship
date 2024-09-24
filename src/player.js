@@ -11,9 +11,9 @@ const Player = (type) => {
 		//Determine row from letter
 		let row;
 		if (typeof letter === "string") {
-			row = letterToIndex(letter);
+			row = letterToIndex(letter) - 1;
 		} else if (typeof letter === "number") {
-			row = letter;
+			row = letter - 1;
 		}
 		//Determine column by converting to zero-indexed
 		const col = y - 1;
@@ -54,7 +54,7 @@ const Player = (type) => {
 
 		const [x, y] = getRandomCoords();
 		if (x && y) {
-			console.log("randomattackcoords", x - 1, y -1);
+			console.log("randomattackcoords", x - 1, y - 1);
 			opponentGameboard.receiveAttack(x - 1, y - 1);
 			return [x, y];
 		}
