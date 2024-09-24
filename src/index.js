@@ -28,10 +28,7 @@ createOppGrid(player2);
 
 selectSquare();
 
-// Args vvv (player, opponentBoard)
-sendAttackOnClick(player1, player2.playerBoard);
-
-//SEND RANDOM ATTACK
+// SEND RANDOM ATTACK
 function computerSendRandomAttack(computer, human) {
 	const attackCoords = computer.computerRandomAttack(human.playerBoard);
 	if (attackCoords) {
@@ -39,3 +36,32 @@ function computerSendRandomAttack(computer, human) {
 		displayHit(human, x, y);
 	}
 }
+
+function playHumanVsComputer(human, computer) {
+	// First, human attack
+	sendAttackOnClick(human, computer.playerBoard, (attackSuccess) => {
+		if (attackSuccess) {
+            console.log(computer.playerBoard.isAllSunk());
+            console.log('Ship4 status:', ship4.printShipStatus());
+            console.log('Ship4 isSunk:', ship4.isSunk());
+			if (computer.playerBoard.isAllSunk()) {
+				alert("Human Wins!");
+				return;
+			}
+
+			// Next, computer attacks
+			computerSendRandomAttack(computer, human);
+
+			// Check if computer wins after attack;
+			if (human.playerBoard.isAllSunk()) {
+				alert("Computer wins!");
+				return;
+			}
+
+			// No winner, continue loop
+			playHumanVsComputer(human, computer);
+		}
+	});
+}
+
+playHumanVsComputer(player1, player2);

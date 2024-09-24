@@ -185,7 +185,7 @@ const getSelectedSquare = () => {
 	return selectedSquare;
 };
 
-const sendAttackOnClick = (player, opponentBoard) => {
+const sendAttackOnClick = (player, opponentBoard, callback) => {
 	const attackBtn = document.getElementById("attack");
 
 	// Remove previous event listeners
@@ -213,6 +213,7 @@ const sendAttackOnClick = (player, opponentBoard) => {
 				alert(
 					"This position has already been attacked! Please select a different one."
 				);
+                callback(false); // Return false callback for player turn logic
 				return;
 			}
 			// Send attack
@@ -226,6 +227,9 @@ const sendAttackOnClick = (player, opponentBoard) => {
 			//display sent attack
 			console.log("sent attack to:", x, y);
 			displaySentHit(opponentBoard, x, y);
+
+            // Send successful attack callback
+            callback(true);
 		}
 	});
 };
