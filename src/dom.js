@@ -1,6 +1,11 @@
+import { Ship } from "./ship.js";
+
 let selectedSquare = [];
 
 const createGrid = (player) => {
+	// Create reference to DOM board container & clear previous
+	const boardContainer = document.querySelector(".board-container");
+	boardContainer.innerHTML = "";
 	// Create reference to player's gameboard
 	const board = player.playerBoard.board;
 
@@ -54,7 +59,7 @@ const createGrid = (player) => {
 			gridContainer.appendChild(square);
 		}
 	}
-	document.body.appendChild(gridContainer);
+	boardContainer.appendChild(gridContainer);
 };
 
 const letterToIndex = (letter) => {
@@ -211,7 +216,7 @@ const sendAttackOnClick = (player, opponentBoard, callback) => {
 				alert(
 					"This position has already been attacked! Please select a different one."
 				);
-                callback(false); // Return false callback for player turn logic
+				callback(false); // Return false callback for player turn logic
 				return;
 			}
 			// Send attack
@@ -225,11 +230,64 @@ const sendAttackOnClick = (player, opponentBoard, callback) => {
 			//display sent attack
 			displaySentHit(opponentBoard, x, y);
 
-            // Send successful attack callback
-            callback(true);
+			// Send successful attack callback
+			callback(true);
 		}
 	});
 };
+
+function playerPlaceShips(player) {
+	// Get dom references
+	const form = document.getElementById("place-ship-form");
+	const prompt = form.querySelector(".prompt");
+	const placeBtn = document.getElementById("place");
+
+	// Array of ship lengths
+	const shipLengths = [5, 4, 3, 3, 2];
+    let currentShipIndex = 0;
+
+	// Function to update prompt
+	function updatePrompt() {
+		prompt.textContent = `Place Ship${currentShipIndex + 1}`;
+	}
+
+	function handlePlaceShip(event) {
+        event.preventDefault();
+
+		// Store user inputs
+		const xCoord = letterToIndex(document.getElementById("x-coord").value) + 1;
+		const yCoord = parseInt(document.getElementById("y-coord").value, 10);
+		const orientation = document.getElementById("orientation").value;
+
+		//Create new Ship
+		let shipLength = shipLengths[currentShipIndex];
+		const newShip = Ship(shipLength);
+
+		const success = player.playerBoard.placeShip(
+			xCoord,
+			yCoord,
+			orientation,
+			newShip
+		);
+
+		if (success) {
+			currentShipIndex++;
+			createGrid(player);
+
+			if (currentShipIndex < shipLengths.length) {
+				updatePrompt();
+			} else {
+				prompt.textContent = "All Ships Placed!";
+				placeBtn.disabled = true;
+			}
+		} else {
+			alert("Invalid Placement");
+		}
+	}
+	// Set initial prompt
+	updatePrompt();
+	placeBtn.addEventListener('click', handlePlaceShip);
+}
 
 export {
 	createGrid,
@@ -238,4 +296,5 @@ export {
 	displaySentHit,
 	selectSquare,
 	sendAttackOnClick,
+	playerPlaceShips,
 };

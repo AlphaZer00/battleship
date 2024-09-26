@@ -7,6 +7,48 @@
 		<title>Document</title>
 	</head>
 	<body>
+		<form id="place-ship-form">
+			<div class="prompt"></div>
+			<div class="form-x-coord">
+				<label for="x-coord">Coordinate:</label>
+				<select name="X Coordinate" id="x-coord">
+					<option value="A">A</option>
+					<option value="B">B</option>
+					<option value="C">C</option>
+					<option value="D">D</option>
+					<option value="E">E</option>
+					<option value="F">F</option>
+					<option value="G">G</option>
+					<option value="H">H</option>
+					<option value="I">I</option>
+					<option value="J">K</option>
+				</select>
+			</div>
+			<div class="form-y-coord">
+				<label for="y-coord">Coordinate:</label>
+				<select name="Y Coordinate" id="y-coord">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>
+				</select>
+			</div>
+			<div class="form-orientation">
+				<label for="orientation">Orientation:</label>
+				<select name="orientation" id="orientation">
+					<option value="horizontal">Horizontal</option>
+					<option value="vertical">Vertical</option>
+				</select>
+			</div>
+      <button id="place">Place</button>
+		</form>
 		<button id="attack">Attack</button>
+    <div class="board-container"></div>
 	</body>
 </html>
