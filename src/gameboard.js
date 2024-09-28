@@ -43,13 +43,21 @@ const Gameboard = () => {
 
 		if (direction === "horizontal") {
 			for (let i = 0; i < ship.length; i++) {
-				board[x - 1][y - 1 + i] = { ship, index: i };
-				ships.push(ship);
+				if (!(board[x - 1][y - 1 + i] === null)) {
+					throw new Error("Ships cannot overlap");
+				} else {
+					board[x - 1][y - 1 + i] = { ship, index: i };
+					ships.push(ship);
+				}
 			}
 		} else if (direction === "vertical") {
 			for (let i = 0; i < ship.length; i++) {
-				board[x - 1 + i][y - 1] = { ship, index: i };
-				ships.push(ship);
+				if (!(board[x - 1 + i][y - 1] === null)) {
+					throw new Error("Ships cannot overlap");
+				} else {
+					board[x - 1 + i][y - 1] = { ship, index: i };
+					ships.push(ship);
+				}
 			}
 		}
 
