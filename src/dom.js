@@ -242,20 +242,67 @@ function playerPlaceShips(player) {
 	const prompt = form.querySelector(".prompt");
 	const placeBtn = document.getElementById("place");
 
+	// Create a new confirm button dynamically
+	const confirmBtn = document.createElement("button");
+	confirmBtn.textContent = "Confirm Placement";
+	confirmBtn.style.display = "none"; // Hide initially
+	form.appendChild(confirmBtn); // Append the confirm button to the form
+
 	// Array of ship lengths
 	const shipLengths = [5, 4, 3, 3, 2];
-    let currentShipIndex = 0;
+	let currentShipIndex = 0;
 
 	// Function to update prompt
 	function updatePrompt() {
 		prompt.textContent = `Place Ship${currentShipIndex + 1}`;
 	}
 
+	// Function to display preview of ship placement
+	function previewShip(x, y, orientation, shipLength) {
+		//Get reference to grid squares
+		const squares = document.getElementsByClassName("square");
+
+		// Preview for horizontal placement
+		if (orientation === "horizontal" && y + shipLength < 12) {
+			for (let i = 0; i < shipLength; i++) {
+				const index = x * 11 + (y + i);
+				if (squares[index]) {
+					squares[index].classList.add("preview");
+				}
+			}
+			return true;
+		} else if (orientation === "vertical" && x + shipLength < 12) {
+			for (let i = 0; i < shipLength; i++) {
+				const index = (x + i) * 11 + y;
+				if (squares[index]) {
+					squares[index].classList.add("preview");
+				}
+			}
+			return true;
+		} else {
+			prompt.textContent =
+				"ERROR: Ship is not in bounds, try a different placement!";
+			return false;
+		}
+	}
+
+	function clearPreview() {
+		const squares = document.getElementsByClassName("square");
+
+		for (let el of squares) {
+			el.classList.remove("preview");
+		}
+	}
+
 	function handlePlaceShip(event) {
-        event.preventDefault();
+		event.preventDefault();
+
+		// Remove any previously previewed ships
+		clearPreview();
 
 		// Store user inputs
-		const xCoord = letterToIndex(document.getElementById("x-coord").value) + 1;
+		const xCoord =
+			letterToIndex(document.getElementById("x-coord").value) + 1;
 		const yCoord = parseInt(document.getElementById("y-coord").value, 10);
 		const orientation = document.getElementById("orientation").value;
 
@@ -263,9 +310,33 @@ function playerPlaceShips(player) {
 		let shipLength = shipLengths[currentShipIndex];
 		const newShip = Ship(shipLength);
 
+		// Preview the placement
+		if (previewShip(xCoord, yCoord, orientation, shipLength)) {
+			prompt.textContent = "Confirm placement of ship";
+			confirmBtn.style.display = "inline";
+		}
+	}
+
+	function handleConfirmPlacement(event) {
+		event.preventDefault();
+
+		// Store user inputs
+		const xCoord = letterToIndex(document.getElementById("x-coord").value);
+		const yCoord =
+			parseInt(document.getElementById("y-coord").value, 10) - 1;
+		const orientation = document.getElementById("orientation").value;
+
+		// Get the current ship length and create the ship
+		const shipLength = shipLengths[currentShipIndex];
+		const newShip = Ship(shipLength);
+
+		// Clear the previous preview
+		clearPreview(xCoord, yCoord, orientation, shipLength);
+
+		// Place the ship on the board
 		const success = player.playerBoard.placeShip(
-			xCoord,
-			yCoord,
+			xCoord + 1,
+			yCoord + 1,
 			orientation,
 			newShip
 		);
@@ -275,18 +346,24 @@ function playerPlaceShips(player) {
 			createGrid(player);
 
 			if (currentShipIndex < shipLengths.length) {
-				updatePrompt();
+				updatePrompt(); // Show prompt for the next ship
+				placeBtn.style.display = "inline"; // Show place button again for next ship
+				confirmBtn.style.display = "none"; // Hide confirm button again
 			} else {
 				prompt.textContent = "All Ships Placed!";
-				placeBtn.disabled = true;
+				confirmBtn.disabled = true; // Disable the confirm button after all ships are placed
 			}
 		} else {
-			alert("Invalid Placement");
+			alert("Invalid placement, try different coordinates.");
+			placeBtn.style.display = "inline"; // Show place button again to retry
+			confirmBtn.style.display = "none"; // Hide confirm button
+			updatePrompt(); // Reset prompt to ask for placement
 		}
 	}
 	// Set initial prompt
 	updatePrompt();
-	placeBtn.addEventListener('click', handlePlaceShip);
+	placeBtn.addEventListener("click", handlePlaceShip);
+	confirmBtn.addEventListener("click", handleConfirmPlacement);
 }
 
 export {
