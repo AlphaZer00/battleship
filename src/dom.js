@@ -286,6 +286,7 @@ function playerPlaceShips(player) {
 		}
 	}
 
+	// Function to clear preview squares
 	function clearPreview() {
 		const squares = document.getElementsByClassName("square");
 
@@ -294,6 +295,7 @@ function playerPlaceShips(player) {
 		}
 	}
 
+	// Function to handle placing preview of ships
 	function handlePlaceShip(event) {
 		event.preventDefault();
 
@@ -308,7 +310,6 @@ function playerPlaceShips(player) {
 
 		//Create new Ship
 		let shipLength = shipLengths[currentShipIndex];
-		const newShip = Ship(shipLength);
 
 		// Preview the placement
 		if (previewShip(xCoord, yCoord, orientation, shipLength)) {
@@ -317,6 +318,7 @@ function playerPlaceShips(player) {
 		}
 	}
 
+	// Function to handle confirming placement of ship
 	function handleConfirmPlacement(event) {
 		event.preventDefault();
 
@@ -360,6 +362,7 @@ function playerPlaceShips(player) {
 			updatePrompt(); // Reset prompt to ask for placement
 		}
 	}
+
 	// Set initial prompt
 	updatePrompt();
 	placeBtn.addEventListener("click", handlePlaceShip);
