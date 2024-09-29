@@ -53,6 +53,7 @@ const createGrid = (player) => {
 				if (board[row - 1][col - 1] === null) {
 					square.textContent = ""; // Empty cell
 				} else {
+					square.classList.add("ship");
 					square.textContent = "S"; // Ship cell
 				}
 			}
@@ -254,7 +255,9 @@ function playerPlaceShips(player) {
 
 	// Function to update prompt
 	function updatePrompt() {
-		prompt.textContent = `Place Ship${currentShipIndex + 1}`;
+		prompt.textContent = `Place Ship #${currentShipIndex + 1} (length: ${
+			shipLengths[currentShipIndex]
+		})`;
 	}
 
 	// Function to display preview of ship placement
@@ -266,6 +269,11 @@ function playerPlaceShips(player) {
 		if (orientation === "horizontal" && y + shipLength < 12) {
 			for (let i = 0; i < shipLength; i++) {
 				const index = x * 11 + (y + i);
+                // Check if player is attempting to overlap ship placements
+				if (squares[index].classList.contains('ship')) {
+                    prompt.textContent = 'ERROR: Ships cannot overlap, try a different placement!'
+                    return false
+                }
 				if (squares[index]) {
 					squares[index].classList.add("preview");
 				}
@@ -274,6 +282,11 @@ function playerPlaceShips(player) {
 		} else if (orientation === "vertical" && x + shipLength < 12) {
 			for (let i = 0; i < shipLength; i++) {
 				const index = (x + i) * 11 + y;
+                                // Check if player is attempting to overlap ship placements
+				if (squares[index].classList.contains('ship')) {
+                    prompt.textContent = 'ERROR: Ships cannot overlap, try a different placement!'
+                    return false
+                }
 				if (squares[index]) {
 					squares[index].classList.add("preview");
 				}
