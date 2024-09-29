@@ -1,3 +1,5 @@
+import { Ship } from "./ship.js";
+
 const Gameboard = () => {
 	let endpoint;
 	const missedShots = [];
@@ -81,6 +83,56 @@ const Gameboard = () => {
 		return ships.every((ship) => ship.isSunk());
 	};
 
+	const placeComputerShips = () => {
+		const shipLengths = [5, 4, 3, 3, 2];
+
+		// Function to generate random coordinates and orientation
+		const getRandomPlacement = () => {
+			const x = Math.floor(Math.random() * 10) + 1;
+			const y = Math.floor(Math.random() * 10) + 1;
+			const orientation = Math.random() < 0.5 ? "horizontal" : "vertical";
+			return { x, y, orientation };
+		};
+
+		// Function to determine if placement is valid
+		const validatePlacement = (x, y, orientation, length) => {
+			if (orientation === "horizontal") {
+				// Check if out of bounds
+				if (y - 1 + length > 10) return false;
+				for (let i = 0; i < length; i++) {
+					// Check if overlapping with another ship
+					if (board[x - 1][y - 1 + i] !== null) {
+						return false;
+					}
+				}
+			} else if (orientation === "vertical") {
+				// Check if out of bounds
+				if (x - 1 + length > 10) return false;
+				for (let i = 0; i < length; i++) {
+					// Check if overlapping with another ship
+					if (board[x - 1 + i][y - 1] !== null) {
+						return false;
+					}
+				}
+			}
+			return true;
+		};
+
+		// Loop through array of ship lengths
+		shipLengths.forEach((length) => {
+			let placed = false;
+			while (!placed) {
+				const { x, y, orientation } = getRandomPlacement(); // Get random placement
+				// If placement is valid
+				if (validatePlacement(x, y, orientation, length)) {
+					const newShip = Ship(length); // Create Ship object
+					placeShip(x, y, orientation, newShip); // Place the ship
+					placed = true; // Set placed to true so that while loop ends for this element of shipLengths
+				}
+			}
+		});
+	};
+
 	return {
 		placeShip,
 		board,
@@ -88,6 +140,7 @@ const Gameboard = () => {
 		receiveAttack,
 		missedShots,
 		isAllSunk,
+		placeComputerShips,
 	};
 };
 

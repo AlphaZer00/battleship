@@ -6,15 +6,18 @@ import {
 	createOppGrid,
 	selectSquare,
 	sendAttackOnClick,
-    playerPlaceShips,
+	playerPlaceShips,
 } from "./dom.js";
 
 const player1 = Player("human");
 const player2 = Player("computer");
 
+createGrid(player1);
+
 playerPlaceShips(player1);
 
 createOppGrid(player2);
+player2.playerBoard.placeComputerShips();
 
 selectSquare();
 
