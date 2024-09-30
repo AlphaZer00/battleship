@@ -35,7 +35,7 @@ function playHumanVsComputer(human, computer) {
 	sendAttackOnClick(human, computer.playerBoard, (attackSuccess) => {
 		if (attackSuccess) {
 			if (computer.playerBoard.isAllSunk()) {
-				alert("Human Wins!");
+				alert("You Win!");
 				return;
 			}
 
@@ -44,7 +44,7 @@ function playHumanVsComputer(human, computer) {
 
 			// Check if computer wins after attack;
 			if (human.playerBoard.isAllSunk()) {
-				alert("Computer wins!");
+				alert("Computer Wins!");
 				return;
 			}
 
