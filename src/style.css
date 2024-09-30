@@ -6,3 +6,11 @@
 .preview {
     background-color: lightgreen;
 }
+
+.miss {
+    background-color: rgb(234, 44, 44);
+}
+
+.hit {
+    background-color: rgb(83, 214, 66);
+}
