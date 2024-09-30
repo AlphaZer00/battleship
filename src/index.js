@@ -7,6 +7,7 @@ import {
 	selectSquare,
 	sendAttackOnClick,
 	playerPlaceShips,
+	addHoverEffect,
 } from "./dom.js";
 
 const player1 = Player("human");
@@ -19,7 +20,9 @@ playerPlaceShips(player1);
 createOppGrid(player2);
 player2.playerBoard.placeComputerShips();
 
+
 selectSquare();
+addHoverEffect();
 
 // SEND RANDOM ATTACK
 function computerSendRandomAttack(computer, human) {

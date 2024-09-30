@@ -378,6 +378,22 @@ function playerPlaceShips(player) {
 	confirmBtn.addEventListener("click", handleConfirmPlacement);
 }
 
+const addHoverEffect = () => {
+	const squares = document.querySelectorAll(".opp-square:not(.hit, .miss)");
+	console.log(squares);
+	for (let el of squares) {
+		el.addEventListener("mouseover", () => {
+            if (!el.classList.contains("hit") && !el.classList.contains("miss")) {
+			    el.classList.add("hover");
+            }
+		});
+
+		el.addEventListener("mouseout", () => {
+			el.classList.remove("hover");
+		});
+	}
+};
+
 export {
 	createGrid,
 	displayHit,
@@ -386,4 +402,5 @@ export {
 	selectSquare,
 	sendAttackOnClick,
 	playerPlaceShips,
+	addHoverEffect,
 };
