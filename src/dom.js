@@ -236,6 +236,9 @@ function playerPlaceShips(player) {
 	const form = document.getElementById("place-ship-form");
 	const prompt = form.querySelector(".prompt");
 	const placeBtn = document.getElementById("place");
+	const attackBtn = document.getElementById("attack");
+	attackBtn.disabled = true;
+	attackBtn.style.display = "none";
 
 	// Create a new confirm button dynamically
 	const confirmBtn = document.createElement("button");
@@ -363,6 +366,9 @@ function playerPlaceShips(player) {
 			} else {
 				prompt.textContent = "All Ships Placed!";
 				form.style.display = "none";
+				let attackBtn = document.getElementById("attack");
+				attackBtn.disabled = false;
+				attackBtn.style.display = "inline";
 			}
 		} else {
 			alert("Invalid placement, try different coordinates.");
@@ -380,12 +386,14 @@ function playerPlaceShips(player) {
 
 const addHoverEffect = () => {
 	const squares = document.querySelectorAll(".opp-square:not(.hit, .miss)");
-	console.log(squares);
 	for (let el of squares) {
 		el.addEventListener("mouseover", () => {
-            if (!el.classList.contains("hit") && !el.classList.contains("miss")) {
-			    el.classList.add("hover");
-            }
+			if (
+				!el.classList.contains("hit") &&
+				!el.classList.contains("miss")
+			) {
+				el.classList.add("hover");
+			}
 		});
 
 		el.addEventListener("mouseout", () => {
