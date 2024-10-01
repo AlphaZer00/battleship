@@ -4,13 +4,25 @@
 }
 
 .preview {
-    background-color: lightgreen;
+	background-color: lightgreen;
 }
 
 .miss {
-    background-color: rgb(234, 44, 44);
+	background-color: rgb(234, 44, 44);
 }
 
 .hit {
-    background-color: rgb(83, 214, 66);
+	background-color: rgb(83, 214, 66);
+}
+
+.hover {
+	background-color: lightgray;
+}
+
+body {
+	display: flex;
+}
+
+.square.ship.hit {
+	background-color: rgb(83, 214, 66) !important;
 }
