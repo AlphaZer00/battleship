@@ -16,8 +16,8 @@ const createGrid = (player) => {
 	// Style grid container
 	gridContainer.style.gridTemplateColumns = `repeat(11, 1fr)`;
 	gridContainer.style.gridTemplateRows = `repeat(11, 1fr)`;
-	gridContainer.style.width = "500px";
-	gridContainer.style.height = "500px";
+	gridContainer.style.width = "400px";
+	gridContainer.style.height = "400px";
 	gridContainer.classList.add("grid");
 
 	// Array of letters
@@ -85,11 +85,14 @@ const displayHit = (player, letter, columnNum) => {
 	if (target === null) {
 		squares[index].classList.add("miss");
 	} else {
-		squares[index].classList.add("miss");
+		squares[index].classList.add("hit");
+		squares[index].style.backgroundColor = "rgb(83, 214, 66);";
 	}
 };
 
 const createOppGrid = () => {
+	// Get reference to board container
+	const oppBoard = document.querySelector(".opp-board-container");
 	// Create grid container
 	const gridContainer = document.createElement("div");
 	gridContainer.style.display = "grid";
@@ -97,8 +100,8 @@ const createOppGrid = () => {
 	// Style grid container
 	gridContainer.style.gridTemplateColumns = `repeat(11, 1fr)`;
 	gridContainer.style.gridTemplateRows = `repeat(11, 1fr)`;
-	gridContainer.style.width = "500px";
-	gridContainer.style.height = "500px";
+	gridContainer.style.width = "400px";
+	gridContainer.style.height = "400px";
 	gridContainer.classList.add("opp-grid");
 
 	// Array of letters
@@ -135,7 +138,7 @@ const createOppGrid = () => {
 			gridContainer.appendChild(square);
 		}
 	}
-	document.body.appendChild(gridContainer);
+	oppBoard.appendChild(gridContainer);
 };
 
 const displaySentHit = (opponentGameboard, letter, columnNum) => {
