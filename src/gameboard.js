@@ -4,9 +4,9 @@ const Gameboard = () => {
 	let endpoint;
 	const missedShots = [];
 	const ships = [];
-
+    const allReceivedShots = [];
 	const board = new Array(10);
-	for (let i = 0; i < board.length; i++) {
+	for (let i = 0; i < 10; i++) {
 		board[i] = new Array(10);
 		for (let j = 0; j < 10; j++) {
 			board[i][j] = null;
@@ -69,13 +69,23 @@ const Gameboard = () => {
 	const receiveAttack = (x, y) => {
 		// Create variable for target
 		const target = board[x][y];
-		// Check if ship is at target
-		if (target && target.ship) {
-			// Mark as hit
-			target.ship.hit(target.index);
+		//Check if target is a duplicate shot
+        const isReceivedShot = allReceivedShots.some((coord) => {
+			return coord[0] === x && coord[1] === y;
+		});
+
+		if (isReceivedShot) {
+			return false;
 		} else {
-			// record missed hit
-			missedShots.push([x, y]);
+			// Check if ship is at target
+			if (target && target.ship) {
+				// Mark as hit
+				target.ship.hit(target.index);
+			} else {
+				// record missed hit
+				missedShots.push([x, y]);
+			}
+			return true;
 		}
 	};
 

@@ -71,7 +71,7 @@ const letterToIndex = (letter) => {
 const displayHit = (player, letter, columnNum) => {
 	let x;
 	if (typeof letter === "string") {
-		x = letterToIndex(letter);
+		x = letterToIndex(letter) - 1;
 	} else if (typeof letter === "number") {
 		x = letter - 1;
 	}
