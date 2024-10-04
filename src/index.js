@@ -13,13 +13,12 @@ import {
 const player1 = Player("human");
 const player2 = Player("computer");
 
+createOppGrid(player2);
 createGrid(player1);
 
 playerPlaceShips(player1);
 
-createOppGrid(player2);
-player2.playerBoard.placeComputerShips();
-
+player2.playerBoard.placeShipsRandom();
 
 selectSquare();
 addHoverEffect();
@@ -29,7 +28,7 @@ function computerSendRandomAttack(computer, human) {
 	const attackCoords = computer.computerRandomAttack(human.playerBoard);
 	if (attackCoords) {
 		const [x, y] = attackCoords;
-		displayHit(human, x, y);
+		displayHit(human, x + 1, y + 1);
 	}
 }
 

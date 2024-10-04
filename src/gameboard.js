@@ -93,7 +93,7 @@ const Gameboard = () => {
 		return ships.every((ship) => ship.isSunk());
 	};
 
-	const placeComputerShips = () => {
+	const placeShipsRandom = () => {
 		const shipLengths = [5, 4, 3, 3, 2];
 
 		// Function to generate random coordinates and orientation
@@ -150,7 +150,7 @@ const Gameboard = () => {
 		receiveAttack,
 		missedShots,
 		isAllSunk,
-		placeComputerShips,
+		placeShipsRandom,
 	};
 };
 

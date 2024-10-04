@@ -240,6 +240,8 @@ function playerPlaceShips(player) {
 	const prompt = form.querySelector(".prompt");
 	const placeBtn = document.getElementById("place");
 	const attackBtn = document.getElementById("attack");
+	const randomBtn = document.getElementById("randomPlace");
+
 	attackBtn.disabled = true;
 	attackBtn.style.display = "none";
 
@@ -381,10 +383,22 @@ function playerPlaceShips(player) {
 		}
 	}
 
+	function handleRandomPlaceBtn(event) {
+		event.preventDefault();
+
+		player.playerBoard.placeShipsRandom();
+		form.style.display = "none";
+        createGrid(player);
+        let attackBtn = document.getElementById("attack");
+		attackBtn.disabled = false;
+		attackBtn.style.display = "inline";
+	}
+
 	// Set initial prompt
 	updatePrompt();
 	placeBtn.addEventListener("click", handlePlaceShip);
 	confirmBtn.addEventListener("click", handleConfirmPlacement);
+	randomBtn.addEventListener("click", handleRandomPlaceBtn);
 }
 
 const addHoverEffect = () => {
