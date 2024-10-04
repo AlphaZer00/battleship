@@ -124,12 +124,14 @@ const createOppGrid = () => {
 				square.textContent = col; // Numbers along the top
 				square.style.fontWeight = "bold";
 				square.style.backgroundColor = "#f0f0f0";
+				square.classList.add("border");
 			}
 			// Add letter labels at the first column
 			else if (col === 0 && row > 0) {
 				square.textContent = letters[row]; // Letters along the left
 				square.style.fontWeight = "bold";
 				square.style.backgroundColor = "#f0f0f0";
+				square.classList.add("border");
 			}
 			// Fill the rest of the grid with null
 			else if (row > 0 && col > 0) {
@@ -187,51 +189,48 @@ const getSelectedSquare = () => {
 };
 
 const sendAttackOnClick = (player, opponentBoard, callback) => {
-	const attackBtn = document.getElementById("attack");
+	const squares = document.querySelectorAll(".opp-square:not(.hit, .miss)");
+	for (let el of squares) {
+		if (!el.classList.contains("hit") && !el.classList.contains("miss")) {
+			el.addEventListener("click", () => {
+				// Store coordinates
+				const [x, y] = getSelectedSquare();
 
-	// Remove previous event listeners
-	attackBtn.replaceWith(attackBtn.cloneNode(true));
-	const newAttackBtn = document.getElementById("attack");
+				// Check if coordinates exist
+				if (x !== null && y !== null) {
+					// Get reference to target square on DOM
+					const targetSquare = document.querySelector(
+						`.opp-square:nth-child(${x * 11 + (y + 1)})`
+					);
 
-	// On attack button click
-	newAttackBtn.addEventListener("click", () => {
-		// Store coordinates
-		const [x, y] = getSelectedSquare();
+					// Check if square has 'hit', 'miss', or 'border' class
+					if (
+						targetSquare.classList.contains("hit") ||
+						targetSquare.classList.contains("miss") ||
+						targetSquare.classList.contains("border")
+					) {
+						callback(false); // Return false callback for player turn logic
+						return;
+					}
+					// Send attack
+					player.sendAttack(opponentBoard, x, y);
 
-		// Check if coordinates exist
-		if (x !== null && y !== null) {
-			// Get reference to target square on DOM
-			const targetSquare = document.querySelector(
-				`.opp-square:nth-child(${x * 11 + (y + 1)})`
-			);
+					// Clear selected grid on html
+					document
+						.querySelectorAll(".opp-square")
+						.forEach((square) => {
+							square.classList.remove("selected");
+						});
 
-			// Check if square has 'hit' or 'miss' class
-			if (
-				targetSquare.classList.contains("hit") ||
-				targetSquare.classList.contains("miss")
-			) {
-				// Alert player and exit from function
-				alert(
-					"This position has already been attacked! Please select a different one."
-				);
-				callback(false); // Return false callback for player turn logic
-				return;
-			}
-			// Send attack
-			player.sendAttack(opponentBoard, x, y);
+					//display sent attack
+					displaySentHit(opponentBoard, x, y);
 
-			// Clear selected grid on html
-			document.querySelectorAll(".opp-square").forEach((square) => {
-				square.classList.remove("selected");
+					// Send successful attack callback
+					callback(true);
+				}
 			});
-
-			//display sent attack
-			displaySentHit(opponentBoard, x, y);
-
-			// Send successful attack callback
-			callback(true);
 		}
-	});
+	}
 };
 
 function playerPlaceShips(player) {
@@ -239,11 +238,8 @@ function playerPlaceShips(player) {
 	const form = document.getElementById("place-ship-form");
 	const prompt = form.querySelector(".prompt");
 	const placeBtn = document.getElementById("place");
-	const attackBtn = document.getElementById("attack");
 	const randomBtn = document.getElementById("randomPlace");
 
-	attackBtn.disabled = true;
-	attackBtn.style.display = "none";
 
 	// Create a new confirm button dynamically
 	const confirmBtn = document.createElement("button");
@@ -371,9 +367,6 @@ function playerPlaceShips(player) {
 			} else {
 				prompt.textContent = "All Ships Placed!";
 				form.style.display = "none";
-				let attackBtn = document.getElementById("attack");
-				attackBtn.disabled = false;
-				attackBtn.style.display = "inline";
 			}
 		} else {
 			alert("Invalid placement, try different coordinates.");
@@ -388,10 +381,7 @@ function playerPlaceShips(player) {
 
 		player.playerBoard.placeShipsRandom();
 		form.style.display = "none";
-        createGrid(player);
-        let attackBtn = document.getElementById("attack");
-		attackBtn.disabled = false;
-		attackBtn.style.display = "inline";
+		createGrid(player);
 	}
 
 	// Set initial prompt
