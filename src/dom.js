@@ -239,7 +239,13 @@ function playerPlaceShips(player) {
 	const prompt = form.querySelector(".prompt");
 	const placeBtn = document.getElementById("place");
 	const randomBtn = document.getElementById("randomPlace");
+	const manualBtn = document.getElementById("manualPlace");
+	const placementChoiceContainer = document.querySelector(
+		".placement-choice-container"
+	);
 
+	// Hide form
+	form.style.display = "none";
 
 	// Create a new confirm button dynamically
 	const confirmBtn = document.createElement("button");
@@ -376,10 +382,18 @@ function playerPlaceShips(player) {
 		}
 	}
 
+	function handleManualPlaceBtn(event) {
+		event.preventDefault();
+
+		placementChoiceContainer.style.display = "none";
+		form.style.display = "inline";
+	}
+
 	function handleRandomPlaceBtn(event) {
 		event.preventDefault();
 
 		player.playerBoard.placeShipsRandom();
+		placementChoiceContainer.style.display = "none";
 		form.style.display = "none";
 		createGrid(player);
 	}
@@ -389,6 +403,7 @@ function playerPlaceShips(player) {
 	placeBtn.addEventListener("click", handlePlaceShip);
 	confirmBtn.addEventListener("click", handleConfirmPlacement);
 	randomBtn.addEventListener("click", handleRandomPlaceBtn);
+	manualBtn.addEventListener("click", handleManualPlaceBtn);
 }
 
 const addHoverEffect = () => {
